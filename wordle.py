@@ -1,8 +1,10 @@
 length=5
 word_list = []
 wrong = []
-misplaced = [[]]*length
-correct = ["_"]*length
+misplaced = [[] for i in range(length)]
+correct = ["_" for i in range(length)]
+win=False
+
 with open("words.rtf","r") as words:
     for word in words:
         word = word.split("\\")[0]
@@ -11,16 +13,27 @@ with open("words.rtf","r") as words:
 print(word_list)
 wordle = "hello"
 
-guess = input("Enter your guess ")
-for letter in guess:
-    if letter in wordle:
+while win == False:
+    guess = input("Enter your guess ")
+    wordle2 = wordle[:]
+    for letter in guess:
         spot = guess.index(letter)
-        if spot == wordle.index(letter):
-            correct[spot] = letter
+        
+        if letter in wordle2:
+            if spot == wordle2.index(letter):
+                correct[spot] = letter
+                wordle2 = (wordle2[0:spot] + "_" + wordle2[spot+1:])
+            else:
+                if letter not in misplaced[spot]:
+                    misplaced[spot].append(letter)
         else:
-            misplaced[spot].append(letter)
-    else:
-        wrong.append(letter)
-print(wrong)
-print(misplaced)
-print(correct)
+            if letter not in wrong:
+                wrong.append(letter)
+        guess = (guess[0:spot] + "_" + guess[spot+1:])
+    
+    print(wrong)
+    print(misplaced)
+    print(correct)
+    if correct == list(wordle):
+        win=True
+        print("You win")
