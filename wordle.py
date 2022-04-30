@@ -1,19 +1,20 @@
 import random
-length=5
-word_list = []
-wrong = []
-misplaced = [[] for i in range(length)]
-correct = ["_" for i in range(length)]
 
-def word_picker():
-    with open("words.rtf","r") as words:
+
+def word_picker(dictionary,length,word_list):
+    with open(dictionary,"r") as words:
         for word in words:
             word = word.split("\\")[0]
+            word = word.split("\n")[0]
             if len(word) == length:
                 word_list.append(word)
+    if len(word_list) == 0:
+        print("No possible words that length")
+        quit()
+        
     return(random.choice(word_list))
 
-def easy_mode():
+def easy_mode(word_list,wrong,misplaced,correct):
     possible_list = []
     for possible in word_list:
         bad=False
@@ -47,18 +48,27 @@ def easy_mode():
     return(possible_list)
 
 def hard_mode(guess,possible_list):
-    if guess not in possible_list:
-        return(True)
+    return guess not in possible_list
 
 def main():
+    if input("Would you like to play using German words? y or n: ") == "y":
+        dictionary = "wordlist-german.txt"
+    else:
+        dictionary = "words.rtf"
+    length = int(input("What word length do you want? "))
     easy_enabled = input("Would you like to play with hints mode? y or n: ") == "y"
     hard_enabled = input("Would you like to play with hard mode? y or n: ") == "y"
     
+    word_list = []
+    wrong = []
+    misplaced = [[] for i in range(length)]
+    correct = ["_" for i in range(length)]
     win=False
-    wordle = word_picker()
+    
+    wordle = word_picker(dictionary,length,word_list)
     while win == False:
         
-        possible_list = easy_mode()
+        possible_list = easy_mode(word_list,wrong,misplaced,correct)
         if easy_enabled:
             print(possible_list)
         
