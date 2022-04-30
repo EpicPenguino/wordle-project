@@ -1,3 +1,4 @@
+import random
 length=5
 word_list = []
 wrong = []
@@ -10,15 +11,15 @@ with open("words.rtf","r") as words:
         word = word.split("\\")[0]
         if len(word) == length:
             word_list.append(word)
-print(word_list)
-wordle = "hello"
+wordle = (random.choice(word_list))
 
 while win == False:
     guess = input("Enter your guess ")
+    if guess not in word_list:
+        print("Invalid guess")
+        continue
     wordle2 = wordle[:]
-    for letter in guess:
-        spot = guess.index(letter)
-        
+    for spot,letter in enumerate(guess):
         if letter in wordle2:
             if spot == wordle2.index(letter):
                 correct[spot] = letter
@@ -30,7 +31,7 @@ while win == False:
             if letter not in wrong:
                 wrong.append(letter)
         guess = (guess[0:spot] + "_" + guess[spot+1:])
-    
+    wrong.sort()
     print(wrong)
     print(misplaced)
     print(correct)
