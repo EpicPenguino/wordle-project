@@ -46,15 +46,31 @@ def easy_mode():
         possible_list.append(possible)
     return(possible_list)
 
+def hard_mode(guess,possible_list):
+    if guess not in possible_list:
+        return(True)
+
 def main():
+    easy_enabled = input("Would you like to play with hints mode? y or n: ") == "y"
+    hard_enabled = input("Would you like to play with hard mode? y or n: ") == "y"
+    
     win=False
     wordle = word_picker()
     while win == False:
-        print(easy_mode())
+        
+        possible_list = easy_mode()
+        if easy_enabled:
+            print(possible_list)
+        
         guess = input("\nEnter your guess ")
+        
+        if hard_enabled and hard_mode(guess,possible_list):
+            print("Guess does not match hints")
+            continue
         if guess not in word_list:
             print("Invalid guess")
             continue
+
         wordle2 = wordle[:]
         for spot,letter in enumerate(guess):
             if letter in wordle2:
