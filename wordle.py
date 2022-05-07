@@ -50,7 +50,6 @@ def easy_mode(word_list,wrong,misplaced,correct):
                     break
             if bad:
                 break
-        if bad:
             continue
 
         possible_list.append(possible)
@@ -63,13 +62,13 @@ def hard_mode(guess,possible_list):
     return guess not in possible_list
 
 def main():
-    if input("Would you like to play using German words? y or n: ") == "y":
+    if input("Would you like to play using German words? yes or no: ").lower() == "yes":
         dictionary = "wordlist-german.txt"
     else:
         dictionary = "words.rtf"
     length = int(input("What word length do you want? "))
-    easy_enabled = input("Would you like to play with hints mode? y or n: ") == "y"
-    hard_enabled = input("Would you like to play with hard mode? y or n: ") == "y"
+    easy_enabled = input("Would you like to play with hints mode? yes or no: ").lower() == "yes"
+    hard_enabled = input("Would you like to play with hard mode? yes or no: ").lower() == "yes"
     
     # word_list sets up a list to put every word inside of. wrong, misplaced, and correct are the "hint" lists. win is the bool that determines whether to continue the game
     word_list, wrong, misplaced, correct, win = [], [], [[] for i in range(length)], ["_" for i in range(length)], False
@@ -111,7 +110,12 @@ def main():
         print(f"Correctly positioned letters: {correct}")
         if correct == list(wordle):
             win=True
-            print("You win")
+            print("__     __                    _         _ ")
+            print("\ \   / /                   (_)       | |")
+            print(" \ \_/ /__  _   _  __      ___ _ __   | |")
+            print("  \   / _ \| | | | \ \ /\ / / | '_ \  | |")
+            print("   | | (_) | |_| |  \ V  V /| | | | | |_|")
+            print("   |_|\___/ \__,_|   \_/\_/ |_|_| |_| (_)")
 
 if __name__ == "__main__":
     main()
