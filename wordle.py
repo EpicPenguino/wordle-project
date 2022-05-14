@@ -61,7 +61,7 @@ def easy_mode(word_list,wrong,misplaced,correct):
 def hard_mode(guess,possible_list):
     return guess not in possible_list
 
-def main():
+def game():
     if input("Would you like to play using German words? yes or no: ").lower() == "yes":
         dictionary = "wordlist-german.txt"
     else:
@@ -79,7 +79,6 @@ def main():
         possible_list = easy_mode(word_list,wrong,misplaced,correct)
         if easy_enabled:
             print(possible_list)
-        
         guess = input("\nEnter your guess: ")
         
         if hard_enabled and hard_mode(guess,possible_list):
@@ -109,13 +108,16 @@ def main():
         print(f"Misplaced letters: {misplaced}")
         print(f"Correctly positioned letters: {correct}")
         if correct == list(wordle):
-            win=True
             print("__     __                    _         _ ")
             print("\ \   / /                   (_)       | |")
             print(" \ \_/ /__  _   _  __      ___ _ __   | |")
             print("  \   / _ \| | | | \ \ /\ / / | '_ \  | |")
             print("   | | (_) | |_| |  \ V  V /| | | | | |_|")
             print("   |_|\___/ \__,_|   \_/\_/ |_|_| |_| (_)")
-
-if __name__ == "__main__":
-    main()
+            # Prompts user to play again after winning
+            if input("Do you want to play again? ").lower() == "yes":
+                win=False
+                game()
+            else:
+                win=True
+game()
