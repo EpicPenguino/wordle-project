@@ -12,4 +12,4 @@ The user will be continousuly prompted through the command line for a valid gues
 After winning, there is also an option to play again.
 
 ## Example
-[<img src="docs/example.png" width="300px">]
+<img src="docs/example.png" width="300px">
